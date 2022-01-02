@@ -14,6 +14,12 @@ public class Interactable : MonoBehaviour
 
     bool hasInteracted = false;
 
+    private void Awake()
+    {
+        if (interactionTransform == null)
+            interactionTransform = this.transform;
+
+    }
     private void Update()
     {
         if (isFocus && hasInteracted == false)
@@ -31,8 +37,12 @@ public class Interactable : MonoBehaviour
     {
         Debug.Log("Interacting with " + this.gameObject.name);
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
+
+        if (interactionTransform == null)
+            interactionTransform = this.transform;
+
         Gizmos.color = Color.yellow;
 
         Gizmos.DrawWireSphere(this.interactionTransform.position, radius);
