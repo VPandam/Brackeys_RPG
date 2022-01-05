@@ -24,14 +24,14 @@ public class PlayerStats : CharacterStats
     {
         if (newItem != null)
         {
-            Debug.Log(newItem.armorMultiplier + " PlayerStats");
             damage.AddModifier(newItem.damageMultiplier);
             armor.AddModifier(newItem.armorMultiplier);
         }
         if (oldItem != null)
         {
-            damage.RemoveModifier(newItem.damageMultiplier);
-            armor.RemoveModifier(newItem.armorMultiplier);
+            Debug.Log(oldItem.damageMultiplier + " PlayerStats");
+            damage.RemoveModifier(oldItem.damageMultiplier);
+            armor.RemoveModifier(oldItem.armorMultiplier);
         }
     }
 }

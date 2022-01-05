@@ -62,13 +62,7 @@ public class EquipmentManager : MonoBehaviour
         newEquipment.RemoveFromInventory();
         currentEquipment[equipmentSlot] = newEquipment;
 
-        if (onEquipmentChanged != null)
-        {
-            onEquipmentChanged.Invoke(newEquipment, oldEquipment);
-        }
-
         SetEquipmentBlendShapes(newEquipment, 100);
-
 
         SkinnedMeshRenderer newMesh = Instantiate<SkinnedMeshRenderer>(newEquipment.mesh);
         newMesh.transform.parent = targetMesh.transform;
@@ -101,6 +95,7 @@ public class EquipmentManager : MonoBehaviour
             {
                 onEquipmentChanged.Invoke(null, oldItem);
             }
+            Debug.Log("After equip");
         }
         return oldItem;
 

@@ -14,7 +14,7 @@ public class Stat
     public int GetValue()
     {
         int finalValue = valueBase;
-        modifiersList.ForEach(x => valueBase += x);
+        modifiersList.ForEach(x => finalValue += x);
         return finalValue;
     }
 
