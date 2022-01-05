@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39c975685eff9740a852060da2539cb, type: 3}
-  m_Name: Shield
+  m_Script: {fileID: 11500000, guid: a40a0b1d4aa2e8d4eb8d8a6015ce59bc, type: 3}
+  m_Name: Hair
   m_EditorClassIdentifier: 
-  name: Shield
+  name: Hair
   icon: {fileID: 0}
-  isDefaultItem: 0
+  isDefaultItem: 1
+  damageMultiplier: 0
+  armorMultiplier: 0
+  equipmentSlot: 0
+  mesh: {fileID: 6987056288591948457, guid: a789b7a9f5602364d940f593fd2c2b07, type: 3}
+  coveredRegions: 

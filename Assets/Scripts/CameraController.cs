@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Vector3 offset;
-    private float currentZoom = 10f, minZoom = 5f, maxZoom = 15f, zoomSpeed = 4f;
+    private float currentZoom = 7f, minZoom = 5f, maxZoom = 10f, zoomSpeed = 4f;
     public float yawSpeed;
     float currentYaw = 0;
     public Transform target;
