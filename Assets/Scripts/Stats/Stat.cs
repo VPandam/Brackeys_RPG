@@ -15,6 +15,8 @@ public class Stat
     {
         int finalValue = valueBase;
         modifiersList.ForEach(x => finalValue += x);
+        if (finalValue == 0)
+            finalValue = 1;
         return finalValue;
     }
 

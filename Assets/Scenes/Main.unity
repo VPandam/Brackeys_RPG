@@ -4383,6 +4383,7 @@ GameObject:
   - component: {fileID: 1288213622}
   - component: {fileID: 1288213623}
   - component: {fileID: 1288213624}
+  - component: {fileID: 1288213625}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4531,6 +4532,22 @@ MonoBehaviour:
   armor:
     valueBase: 0
     modifiersList: 
+  attackSpeed:
+    valueBase: 0
+    modifiersList: 
+--- !u!114 &1288213625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288213615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d362991a5c3522a498f3ed2ef92a4398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacking: 0
 --- !u!1 &1300279491
 GameObject:
   m_ObjectHideFlags: 0
@@ -6675,6 +6692,7 @@ GameObject:
   - component: {fileID: 1912152331}
   - component: {fileID: 1912152333}
   - component: {fileID: 1912152332}
+  - component: {fileID: 1912152334}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -6781,6 +6799,9 @@ MonoBehaviour:
   armor:
     valueBase: 0
     modifiersList: 
+  attackSpeed:
+    valueBase: 0
+    modifiersList: 
 --- !u!114 &1912152333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6795,6 +6816,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 4
   interactionTransform: {fileID: 1912152327}
+  isFocus: 0
+--- !u!114 &1912152334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912152326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d362991a5c3522a498f3ed2ef92a4398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacking: 0
 --- !u!1 &1917560325
 GameObject:
   m_ObjectHideFlags: 0

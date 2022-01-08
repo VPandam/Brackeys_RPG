@@ -10,6 +10,7 @@ public class PlayerMotor : MonoBehaviour
     NavMeshAgent navMeshAgent;
 
     Interactable followTarget;
+    bool following = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +22,12 @@ public class PlayerMotor : MonoBehaviour
     {
         if (followTarget != null)
         {
-            StartCoroutine("FollowTarget");
-
+            FaceTarget();
+            if (!following)
+            {
+                StartCoroutine("FollowTarget");
+                following = true;
+            }
 
         }
     }
@@ -43,6 +48,7 @@ public class PlayerMotor : MonoBehaviour
         navMeshAgent.stoppingDistance = 0;
         navMeshAgent.updateRotation = true;
         followTarget = null;
+        following = false;
     }
 
     IEnumerator FollowTarget()
@@ -50,7 +56,7 @@ public class PlayerMotor : MonoBehaviour
         while (followTarget != null)
         {
             navMeshAgent.SetDestination(followTarget.interactionTransform.position);
-            FaceTarget();
+
             yield return new WaitForSeconds(0.2f);
 
         }

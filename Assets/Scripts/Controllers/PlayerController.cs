@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        //Checks if we are pressing rightclick in groundmask.
+        //If so, move the player to that point.
         if (Input.GetMouseButton(1))
         {
             ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -43,6 +45,9 @@ public class PlayerController : MonoBehaviour
 
             };
         }
+
+        //Checks if we are clicking leftclick into a GO with a interactable script.
+        //If so, set focus on it.
         if (Input.GetMouseButtonDown(0))
         {
             ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -57,6 +62,8 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+    //Set the focus.
+    //Tells to the interactable object is being focused by the player.
     void SetFocus(Interactable newFocus)
     {
         if (currentFocus != newFocus)
@@ -71,6 +78,8 @@ public class PlayerController : MonoBehaviour
         }
         newFocus.OnFocused(this.gameObject);
     }
+    //Set the focus.
+    //Tells to the interactable object is being defocused by the player.
     public void RemoveFocus()
     {
         if (currentFocus != null)

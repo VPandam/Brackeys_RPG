@@ -95,7 +95,6 @@ public class EquipmentManager : MonoBehaviour
             {
                 onEquipmentChanged.Invoke(null, oldItem);
             }
-            Debug.Log("After equip");
         }
         return oldItem;
 

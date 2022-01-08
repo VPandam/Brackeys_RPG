@@ -8,6 +8,7 @@ public class CharacterStats : MonoBehaviour
     public int currentHealth { get; private set; }
     public Stat damage;
     public Stat armor;
+    public Stat attackSpeed;
 
 
     private void Awake()

@@ -8,8 +8,17 @@ public class EnemyController : MonoBehaviour
     public float lookRadius = 10f;
 
     Transform target;
+    CharacterStats targetStats;
+    CharacterStats enemyStats;
     NavMeshAgent agent;
-    bool lookTarget;
+
+    CharacterCombat enemyCombat;
+    bool isOnAttackDistance;
+
+    bool attacking;
+    bool movingToFaceTarget;
+
+
 
     private void OnDrawGizmosSelected()
     {
@@ -22,7 +31,9 @@ public class EnemyController : MonoBehaviour
     {
         target = PlayerManager.sharedInstance.player.transform;
         agent = GetComponent<NavMeshAgent>();
-
+        enemyCombat = GetComponent<CharacterCombat>();
+        enemyStats = GetComponent<CharacterStats>();
+        targetStats = target.gameObject.GetComponent<CharacterStats>();
     }
 
     private void Update()
@@ -32,26 +43,47 @@ public class EnemyController : MonoBehaviour
         {
             agent.SetDestination(target.position);
 
-            if (distance <= agent.stoppingDistance)
+            isOnAttackDistance = distance <= agent.stoppingDistance;
+            if (isOnAttackDistance)
             {
-                //Attack target
-                lookTarget = true;
-                StartCoroutine("FollowTarget");
+                if (!attacking)
+                {
+                    StartCoroutine("AttackTarget");
+                    attacking = true;
+                }
+                if (!movingToFaceTarget)
+                {
+                    StartCoroutine("FaceTargetCo");
+                }
             }
+
 
         }
     }
-
-
-    IEnumerator FollowTarget()
+    IEnumerator AttackTarget()
     {
-        while (lookTarget)
+        while (isOnAttackDistance)
+        {
+
+            enemyCombat.Attack(targetStats);
+            yield return new WaitForEndOfFrame();
+
+        }
+
+        attacking = false;
+    }
+
+
+    IEnumerator FaceTargetCo()
+    {
+        while (isOnAttackDistance)
         {
 
             FaceTarget();
             yield return new WaitForSeconds(0.2f);
 
         }
+        movingToFaceTarget = false;
     }
 
     void FaceTarget()

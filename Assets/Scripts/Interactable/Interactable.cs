@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
+    //Radius of action
     public float radius = 3f;
 
     GameObject player;
 
     public Transform interactionTransform;
 
-    bool isFocus;
+    public bool isFocus;
 
     bool hasInteracted = false;
 
     private void Awake()
     {
+
         if (interactionTransform == null)
             interactionTransform = this.transform;
 
     }
+    public void OnFocused(GameObject player)
+    {
+        isFocus = true;
+        this.player = player;
+        hasInteracted = false;
+    }
+
     private void Update()
     {
         if (isFocus && hasInteracted == false)
@@ -33,10 +42,7 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public virtual void Interact()
-    {
-        Debug.Log("Interacting with " + this.gameObject.name);
-    }
+    public virtual void Interact() { }
     private void OnDrawGizmosSelected()
     {
 
@@ -48,12 +54,7 @@ public class Interactable : MonoBehaviour
         Gizmos.DrawWireSphere(this.interactionTransform.position, radius);
     }
 
-    public void OnFocused(GameObject player)
-    {
-        isFocus = true;
-        this.player = player;
-        hasInteracted = false;
-    }
+
 
     public void onDefocused()
     {

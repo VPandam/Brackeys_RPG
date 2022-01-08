@@ -11,14 +11,6 @@ public class PlayerStats : CharacterStats
         EquipmentManager.equipmentManagerInstance.onEquipmentChanged += OnEquipmentChanged;
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(10);
-        }
-    }
 
     void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
     {
@@ -29,7 +21,6 @@ public class PlayerStats : CharacterStats
         }
         if (oldItem != null)
         {
-            Debug.Log(oldItem.damageMultiplier + " PlayerStats");
             damage.RemoveModifier(oldItem.damageMultiplier);
             armor.RemoveModifier(oldItem.armorMultiplier);
         }
