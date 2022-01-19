@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a40a0b1d4aa2e8d4eb8d8a6015ce59bc, type: 3}
-  m_Name: Shoes
+  m_Name: Sword
   m_EditorClassIdentifier: 
-  name: Pants
-  icon: {fileID: 0}
-  isDefaultItem: 1
-  damageMultiplier: 0
+  name: Sword
+  icon: {fileID: 21300000, guid: 168a688d297d5ec408f23f4d56f58a43, type: 3}
+  isDefaultItem: 0
+  damageMultiplier: 5
   armorMultiplier: 0
-  equipmentSlot: 3
-  mesh: {fileID: 9016440874666560085, guid: e3cd139d93cf10b40b6e99257ec1c2ba, type: 3}
+  equipmentSlot: 4
+  mesh: {fileID: 7840510863382372647, guid: 23e4bfb54fd73e5448aa107b251dbb02, type: 3}
   coveredRegions: 

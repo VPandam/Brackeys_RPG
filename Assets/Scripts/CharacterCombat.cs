@@ -9,8 +9,13 @@ public class CharacterCombat : MonoBehaviour
 
     //Time between attacks
     float attackCooldown = 1.5f;
-    float counter = 0;
 
+    float timeToWait;
+    float counter = 0;
+    public event System.Action OnAttack;
+    public bool InCombat;
+    public float combatCooldown = 5;
+    float lastAttackTime;
     private void Start()
     {
         stats = this.GetComponent<CharacterStats>();
@@ -19,14 +24,34 @@ public class CharacterCombat : MonoBehaviour
     private void Update()
     {
         counter -= Time.deltaTime;
+        if (Time.time - lastAttackTime > combatCooldown)
+        {
+            InCombat = false;
+        }
+
     }
     public void Attack(CharacterStats targetStats)
     {
 
         if (counter <= 0)
         {
+            if (OnAttack != null)
+                OnAttack();
+
+            InCombat = true;
             targetStats.TakeDamage(stats.damage.GetValue());
-            counter = attackCooldown / (float)stats.attackSpeed.GetValue();
+            if (targetStats.currentHealth <= 0 || targetStats == null)
+            {
+                InCombat = false;
+            }
+
+
+            float percentage = (1 + ((float)stats.attackSpeedPerc.GetValue() / 100));
+            timeToWait = Mathf.Clamp(attackCooldown / percentage, 0.5f, 2);
+            counter = timeToWait;
+
+            lastAttackTime = Time.time;
+
         }
 
     }

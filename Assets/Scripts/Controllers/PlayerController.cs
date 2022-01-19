@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundMask;
     PlayerMotor playerMotor;
 
+    CharacterCombat playerCombar;
+
     public Interactable currentFocus;
 
     // Start is called before the first frame update
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
 
         playerMotor = GetComponent<PlayerMotor>();
+        playerCombar = GetComponent<CharacterCombat>();
 
     }
 
@@ -73,12 +76,13 @@ public class PlayerController : MonoBehaviour
                 currentFocus.onDefocused();
             }
             currentFocus = newFocus;
+            Debug.Log("Set focus");
             playerMotor.SetTargetToFollow(currentFocus);
 
         }
         newFocus.OnFocused(this.gameObject);
     }
-    //Set the focus.
+    //Removes the focus.
     //Tells to the interactable object is being defocused by the player.
     public void RemoveFocus()
     {
@@ -87,6 +91,8 @@ public class PlayerController : MonoBehaviour
 
             currentFocus.onDefocused();
             currentFocus = null;
+            playerCombar.InCombat = false;
         }
+
     }
 }

@@ -39,6 +39,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void SetTargetToFollow(Interactable interactable)
     {
+        following = false;
         navMeshAgent.stoppingDistance = interactable.radius * 0.8f;
         navMeshAgent.updateRotation = false;
         followTarget = interactable;

@@ -7,7 +7,7 @@ public class Interactable : MonoBehaviour
     //Radius of action
     public float radius = 3f;
 
-    GameObject player;
+    public GameObject player;
 
     public Transform interactionTransform;
 

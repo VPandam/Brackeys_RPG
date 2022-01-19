@@ -11,6 +11,8 @@ public class EquipmentManager : MonoBehaviour
     SkinnedMeshRenderer[] currentMeshes;
     public SkinnedMeshRenderer targetMesh;
 
+    public Transform shield, sword;
+
     public delegate void OnEquipmentChanged(Equipment newItem, Equipment oldItem);
     public OnEquipmentChanged onEquipmentChanged;
     Inventory inventory;
@@ -62,13 +64,30 @@ public class EquipmentManager : MonoBehaviour
         newEquipment.RemoveFromInventory();
         currentEquipment[equipmentSlot] = newEquipment;
 
+        AttachToMesh(newEquipment, equipmentSlot);
+    }
+
+    void AttachToMesh(Equipment newEquipment, int equipmentSlot)
+    {
         SetEquipmentBlendShapes(newEquipment, 100);
 
         SkinnedMeshRenderer newMesh = Instantiate<SkinnedMeshRenderer>(newEquipment.mesh);
         newMesh.transform.parent = targetMesh.transform;
 
-        newMesh.bones = targetMesh.bones;
-        newMesh.rootBone = targetMesh.rootBone;
+        if (newEquipment != null && newEquipment.equipmentSlot == EquipmentSlot.Weapon)
+        {
+            newMesh.rootBone = sword;
+        }
+        else if (newEquipment != null && newEquipment.equipmentSlot == EquipmentSlot.Shield)
+        {
+            newMesh.rootBone = shield;
+        }
+        else
+        {
+            newMesh.transform.parent = targetMesh.transform;
+            newMesh.bones = targetMesh.bones;
+            newMesh.rootBone = targetMesh.rootBone;
+        }
         currentMeshes[equipmentSlot] = newMesh;
     }
 
@@ -86,6 +105,7 @@ public class EquipmentManager : MonoBehaviour
             {
                 Destroy(currentMeshes[slotIndex].gameObject);
             }
+
             oldItem = currentEquipment[slotIndex];
             inventory.AddItem(oldItem);
             currentEquipment[slotIndex] = null;

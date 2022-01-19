@@ -18,5 +18,5 @@ MonoBehaviour:
   damageMultiplier: 0
   armorMultiplier: 3
   equipmentSlot: 2
-  mesh: {fileID: 6134678363834418302, guid: bce41b9e9422167469ad894938b0898c, type: 3}
+  mesh: {fileID: 6127548835684656425, guid: bce41b9e9422167469ad894938b0898c, type: 3}
   coveredRegions: 00000000

@@ -19,7 +19,8 @@ public class Pickup : Interactable
     {
         bool pickedUp = Inventory.inventoryInstance.AddItem(item);
         if (pickedUp)
+        {
             Destroy(this.gameObject);
-
+        }
     }
 }
