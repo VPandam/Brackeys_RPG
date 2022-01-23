@@ -10,6 +10,8 @@ public class CharacterStats : MonoBehaviour
     public Stat armor;
     public Stat attackSpeedPerc;
 
+    public System.Action<int, int> OnHealthChanged;
+
 
     private void Awake()
     {
@@ -22,6 +24,11 @@ public class CharacterStats : MonoBehaviour
 
         currentHealth -= damageDealt;
         Debug.Log(gameObject.name + " takes " + damageDealt + " damage");
+
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(maxHealth, currentHealth);
+        }
 
         if (currentHealth <= 0)
         {

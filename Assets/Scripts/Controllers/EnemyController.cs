@@ -38,23 +38,27 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        float distance = Vector3.Distance(target.position, this.transform.position);
-        if (distance <= lookRadius)
+        if (target != null)
         {
-            agent.SetDestination(target.position);
-
-            isOnAttackDistance = distance <= agent.stoppingDistance;
-            if (isOnAttackDistance)
+            float distance = Vector3.Distance(target.position, this.transform.position);
+            if (distance <= lookRadius)
             {
-                if (!attacking)
+                agent.SetDestination(target.position);
+
+                isOnAttackDistance = distance <= agent.stoppingDistance;
+                if (isOnAttackDistance)
                 {
-                    StartCoroutine("AttackTarget");
-                    attacking = true;
+                    if (!attacking)
+                    {
+                        StartCoroutine("AttackTarget");
+                        attacking = true;
+                    }
+                    if (!movingToFaceTarget)
+                    {
+                        StartCoroutine("FaceTargetCo");
+                    }
                 }
-                if (!movingToFaceTarget)
-                {
-                    StartCoroutine("FaceTargetCo");
-                }
+
             }
 
 
@@ -62,9 +66,8 @@ public class EnemyController : MonoBehaviour
     }
     IEnumerator AttackTarget()
     {
-        while (isOnAttackDistance)
+        while (isOnAttackDistance && target != null)
         {
-
             enemyCombat.Attack(targetStats);
             yield return new WaitForEndOfFrame();
 
@@ -76,7 +79,7 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator FaceTargetCo()
     {
-        while (isOnAttackDistance)
+        while (isOnAttackDistance && target != null)
         {
 
             FaceTarget();

@@ -12,7 +12,7 @@ public class CharacterCombat : MonoBehaviour
 
     float timeToWait;
     float counter = 0;
-    public event System.Action OnAttack;
+    public event System.Action<CharacterStats, CharacterStats> OnAttack;
     public bool InCombat;
     public float combatCooldown = 5;
     float lastAttackTime;
@@ -36,14 +36,10 @@ public class CharacterCombat : MonoBehaviour
         if (counter <= 0)
         {
             if (OnAttack != null)
-                OnAttack();
+                OnAttack(stats, targetStats);
 
             InCombat = true;
-            targetStats.TakeDamage(stats.damage.GetValue());
-            if (targetStats.currentHealth <= 0 || targetStats == null)
-            {
-                InCombat = false;
-            }
+            
 
 
             float percentage = (1 + ((float)stats.attackSpeedPerc.GetValue() / 100));

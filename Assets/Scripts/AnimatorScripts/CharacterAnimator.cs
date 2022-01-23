@@ -14,7 +14,8 @@ public class CharacterAnimator : MonoBehaviour
     NavMeshAgent agent;
     protected Animator animator;
     protected CharacterCombat combat;
-    protected AnimatorOverrideController overrideController;
+    public AnimatorOverrideController overrideController;
+    int attackIndex;
 
     protected virtual void Start()
     {
@@ -22,9 +23,16 @@ public class CharacterAnimator : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         combat = GetComponent<CharacterCombat>();
 
-        overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        //Allows to change some clip animations on execution time.
+        if (overrideController == null)
+        {
+
+            overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        }
         animator.runtimeAnimatorController = overrideController;
 
+        //If we dont override this method
+        //Sets the default attack animation set as the current one
         currentAttackAnimSet = defaultAttackAnimSet;
         combat.OnAttack += OnAttack;
 
@@ -32,17 +40,43 @@ public class CharacterAnimator : MonoBehaviour
 
     protected virtual void Update()
     {
-        float speedPercent = agent.velocity.magnitude / agent.speed;
-        animator.SetFloat("speedPerc", speedPercent, locomationAnimationSmoothTime, Time.deltaTime);
 
-        animator.SetBool("inCombat", combat.InCombat);
+        float speedPercent = agent.velocity.magnitude / agent.speed;
+
+        //Movement
+        if (animator != null)
+        {
+
+            animator.SetFloat("speedPerc", speedPercent, locomationAnimationSmoothTime, Time.deltaTime);
+
+            animator.SetBool("inCombat", combat.InCombat);
+        }
     }
 
-    protected virtual void OnAttack()
+    //When an attack is made, trigger the current attack animation and call the take damage coroutine
+    protected virtual void OnAttack(CharacterStats stats, CharacterStats targetStats)
     {
-        Debug.Log("AttackTrigger");
-        animator.SetTrigger("attack");
-        int attackIndex = Random.Range(0, currentAttackAnimSet.Length);
-        overrideController[replaceableAttackAnim.name] = currentAttackAnimSet[attackIndex];
+
+        if (animator != null)
+        {
+
+            animator.SetTrigger("attack");
+            attackIndex = Random.Range(0, currentAttackAnimSet.Length);
+            overrideController[replaceableAttackAnim.name] = currentAttackAnimSet[attackIndex];
+        }
+        StartCoroutine(TakeDamage(stats, targetStats));
+
+    }
+
+    //Waits until half of the duration of the actual attack clip animation 
+    //so the HP and the UI is updated more or less when the attack touches the enemy.
+    IEnumerator TakeDamage(CharacterStats stats, CharacterStats targetStats)
+    {
+        yield return new WaitForSeconds(((currentAttackAnimSet[attackIndex].length) - ((currentAttackAnimSet[attackIndex].length) / 2)));
+        targetStats.TakeDamage(stats.damage.GetValue());
+        if (targetStats.currentHealth <= 0 || targetStats == null)
+        {
+            stats.gameObject.GetComponent<CharacterCombat>().InCombat = false;
+        }
     }
 }

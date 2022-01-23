@@ -23,8 +23,12 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = target.position - offset * currentZoom;
-        transform.LookAt(target.position + Vector3.up * pitch);
-        transform.RotateAround(target.position, Vector3.up, currentYaw);
+        if (target != null)
+        {
+
+            transform.position = target.position - offset * currentZoom;
+            transform.LookAt(target.position + Vector3.up * pitch);
+            transform.RotateAround(target.position, Vector3.up, currentYaw);
+        }
     }
 }

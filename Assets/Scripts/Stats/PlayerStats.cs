@@ -25,4 +25,11 @@ public class PlayerStats : CharacterStats
             armor.RemoveModifier(oldItem.armorMultiplier);
         }
     }
+    public override void Die()
+    {
+        base.Die();
+        //Add ragdoll effect
+
+        Destroy(this.gameObject);
+    }
 }
