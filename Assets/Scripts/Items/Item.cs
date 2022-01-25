@@ -9,13 +9,23 @@ public class Item : ScriptableObject
     public Sprite icon = null;
     public bool isDefaultItem = false;
 
+    public int currentQuantity;
+    public int maxStackSize;
+
+
     public virtual void Use()
     {
         Debug.Log("Using " + name);
     }
 
-    public void RemoveFromInventory(){
+    public void RemoveFromInventory()
+    {
         Inventory.inventoryInstance.RemoveItem(this);
+    }
+
+    public Item GetCopy()
+    {
+        return Instantiate(this);
     }
 
 

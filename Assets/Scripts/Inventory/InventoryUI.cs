@@ -11,6 +11,10 @@ public class InventoryUI : MonoBehaviour
 
     InventorySlot[] inventorySlots;
 
+
+    Item[] items;
+    int[] quantity;
+    int counter = 0;
     private void Awake()
     {
         if (inventoryUI == null)
@@ -38,22 +42,22 @@ public class InventoryUI : MonoBehaviour
     }
     void UpdateInventoryUI()
     {
-
-        //Iterates over all the slots in our inventory.
         for (int i = 0; i < inventorySlots.Length; i++)
         {
-            //If there is another item to add, draw it in the inventoryUI
-            //else clear it.
             if (i < inventory.inventoryList.Count)
             {
                 inventorySlots[i].DrawItem(inventory.inventoryList[i]);
             }
             else
             {
+
                 inventorySlots[i].ClearSlot();
             }
 
         }
+
+        //Iterates over all the slots in our inventory.
+
 
     }
 }

@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
-    Item currentItem;
+    public Item currentItem;
     public Image itemImage;
 
     public Button removeButton;
+
+    public Text currentQuantityText;
+    public int currentQuantity;
 
 
     public void DrawItem(Item item)
@@ -17,6 +20,16 @@ public class InventorySlot : MonoBehaviour
         itemImage.sprite = item.icon;
         itemImage.enabled = true;
         removeButton.interactable = true;
+        if (item.currentQuantity > 1)
+        {
+            currentQuantity = item.currentQuantity;
+            currentQuantityText.enabled = true;
+            currentQuantityText.text = currentQuantity.ToString();
+        }
+        else
+        {
+            currentQuantityText.enabled = false;
+        }
 
     }
 

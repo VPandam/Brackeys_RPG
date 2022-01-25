@@ -107,7 +107,7 @@ public class EquipmentManager : MonoBehaviour
             }
 
             oldItem = currentEquipment[slotIndex];
-            inventory.AddItem(oldItem);
+            inventory.AddItem(oldItem, 1);
             currentEquipment[slotIndex] = null;
             SetEquipmentBlendShapes(oldItem, 0);
 

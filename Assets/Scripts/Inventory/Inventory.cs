@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
 
     public delegate void OnChangeInventory();
     public OnChangeInventory OnChangeInventoryCallback;
+    bool isInList;
 
     private void Awake()
     {
@@ -28,30 +29,67 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="item"></param>
     /// <returns>True if the item is added, false if theres not enough space.</returns>
-    public bool AddItem(Item item)
+    public bool AddItem(Item item, int quantity)
     {
+        Item copyItem = item.GetCopy();
+        isInList = false;
+
         if (!item.isDefaultItem)
         {
-            if (inventoryList.Count >= spaces)
+            foreach (Item i in inventoryList)
             {
-                Debug.Log("Not enough room in invetory");
-            }
-            else
-            {
-                inventoryList.Add(item);
+                if (i.name == item.name && i.currentQuantity < 99)
+                {
+                    isInList = true;
+                    i.currentQuantity += quantity;
 
+                    if (i.currentQuantity > i.maxStackSize)
+                    {
+                        int surplus = i.currentQuantity - i.maxStackSize;
+                        i.currentQuantity -= surplus;
+                        if (OnChangeInventoryCallback != null)
+                        {
+                            OnChangeInventoryCallback.Invoke();
+                        }
+                        AddItem(item, surplus);
+                    }
+                    else
+                    {
+
+                        if (OnChangeInventoryCallback != null)
+                        {
+                            OnChangeInventoryCallback.Invoke();
+                        }
+                    }
+                    return true;
+
+                }
+
+            }
+            if (!isInList)
+            {
+                if (inventoryList.Count >= spaces)
+                {
+                    Debug.Log("Not enough room in invetory");
+                }
+                else
+                {
+                    copyItem.currentQuantity += quantity;
+                    inventoryList.Add(copyItem);
+                }
                 if (OnChangeInventoryCallback != null)
                 {
                     OnChangeInventoryCallback.Invoke();
                 }
-
                 return true;
             }
         }
 
         return false;
-
     }
+
+
+
     /// <summary>
     /// Removes an item of the inventory list.
     /// </summary>
